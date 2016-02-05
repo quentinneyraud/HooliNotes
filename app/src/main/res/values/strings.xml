@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HooliNotes</string>
+    <string name="splash_screen.textview_title">HooliNotes</string>
 </resources>
