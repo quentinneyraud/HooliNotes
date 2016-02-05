@@ -2,9 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
-
-    <style name="GeneralAppTheme" parent="Theme.AppCompat.Light.DarkActionBar" />
 
 </resources>
