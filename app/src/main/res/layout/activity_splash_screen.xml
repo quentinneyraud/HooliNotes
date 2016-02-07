@@ -12,7 +12,6 @@
     tools:context="fr.quentinneyraud.www.hoolinotes.SplashScreenActivity">
 
     <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avloadingIndicatorView"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerInParent="true"
