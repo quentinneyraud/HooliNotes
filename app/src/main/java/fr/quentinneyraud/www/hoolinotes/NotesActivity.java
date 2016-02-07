@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -21,17 +20,20 @@ import java.util.List;
 public class NotesActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationListener, ViewPager.OnPageChangeListener {
 
     private static final String TAG = "====== MAIN ACTIVITY";
-    private static final int GEOLOCATION_INTERVAL = 200;
-    private static final int GEOLOCATION_FAST_INTERVAL = 100;
 
+    // UI
     private TabLayout tabLayout;
+    private ViewPager viewPager;
     private int[] tabIcons = {
         R.drawable.common_plus_signin_btn_text_light_pressed,
         R.drawable.common_plus_signin_btn_text_light_pressed
     };
 
+    // Geolocation
     private GoogleApiClient googleApiClient;
     private Location currentLocation;
+    private static final int GEOLOCATION_INTERVAL = 200;
+    private static final int GEOLOCATION_FAST_INTERVAL = 100;
 
     // Fragments
     private NotesListFragment notesListFragment;
@@ -43,14 +45,12 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_notes);
 
         // View Pager
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
         setupViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
-        // Manually trigger page selected
-        onPageSelected(viewPager.getCurrentItem());
 
         // Tabs
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.main_activity_tabs);
         tabLayout.setupWithViewPager(viewPager);
         setTabIcons();
 
@@ -61,10 +61,18 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
     }
 
-    private void setTabIcons(){
-        for (int i = 0; i < tabIcons.length; i++){
-            tabLayout.getTabAt(i).setIcon(tabIcons[i]);
-        }
+    /*
+        Geolocation
+     */
+
+    protected void onStart(){
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    protected void onStop(){
+        super.onStop();
+        googleApiClient.disconnect();
     }
 
     @Override
@@ -82,19 +90,28 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionSuspended(int i) {}
 
-    protected void onStart(){
-        super.onStart();
-        googleApiClient.connect();
-    }
-
-    protected void onStop(){
-        super.onStop();
-        googleApiClient.disconnect();
-    }
-
     @Override
     public void onLocationChanged(Location location) {
         currentLocation = location;
+        sendLocationToCurrentFragment();
+    }
+
+    private void sendLocationToCurrentFragment(){
+        if(viewPager.getCurrentItem() == 0){
+            notesListFragment.setLocation(currentLocation);
+        }else if(viewPager.getCurrentItem() == 1){
+            notesMapFragment.setLocation(currentLocation);
+        }
+    }
+
+    /*
+        UI : Tabs & Viewpager
+     */
+
+    private void setTabIcons(){
+        for (int i = 0; i < tabIcons.length; i++){
+            tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -109,22 +126,6 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
         adapter.addFragment(notesMapFragment, "MAPS");
         viewPager.setAdapter(adapter);
     }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
-    @Override
-    public void onPageSelected(int position) {
-        // Set location on page changed
-        if(position == 0){
-            notesListFragment.setLocation(currentLocation);
-        }else if(position == 1){
-            notesMapFragment.setLocation(currentLocation);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {}
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> fragmentList = new ArrayList<>();
@@ -155,4 +156,20 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
             return null;
         }
     }
+
+    /*
+        UX : Tabs
+     */
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageSelected(int position) {
+        // Do not wait new location when tab changed
+        sendLocationToCurrentFragment();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {}
 }
