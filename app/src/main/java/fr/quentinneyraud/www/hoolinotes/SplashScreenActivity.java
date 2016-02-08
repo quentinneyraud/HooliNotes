@@ -2,14 +2,22 @@ package fr.quentinneyraud.www.hoolinotes;
 
 import android.content.Intent;
 import android.os.Build;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.HashMap;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 500;
+    private static final String TAG = "SPLASH_SCREEN_ACTIVITY";
+    SharedPreferencesManager sharedPreferencesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +28,38 @@ public class SplashScreenActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
 
-        new Handler().postDelayed(new Runnable() {
+        sharedPreferencesManager = new SharedPreferencesManager(this);
 
-            @Override
-            public void run() {
-                Intent i = new Intent(SplashScreenActivity.this, NotesActivity.class);
-                startActivity(i);
+        if(sharedPreferencesManager.isUserLogged()){
 
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
+            HashMap<String,String> user = sharedPreferencesManager.getUser();
+
+            // Auth with shared preferences datas
+            new Firebase(getResources().getString(R.string.firebase_base)).authWithPassword(user.get("EMAIL"), user.get("PASSWORD"), new Firebase.AuthResultHandler() {
+
+                @Override
+                public void onAuthenticated(AuthData authData) {
+
+                    // Store user uid
+                    sharedPreferencesManager.setUserUid(authData.getUid());
+
+                    // Start notes activity
+                    Intent i = new Intent(SplashScreenActivity.this, NotesActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+
+                @Override
+                public void onAuthenticationError(FirebaseError firebaseError) {
+                    Toast.makeText(SplashScreenActivity.this, "Erreur auth", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            // start login activity
+            Toast.makeText(SplashScreenActivity.this, "Start login activity", Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 }
