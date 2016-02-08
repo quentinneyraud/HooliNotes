@@ -1,5 +1,7 @@
 package fr.quentinneyraud.www.hoolinotes;
 
+import android.content.Context;
+
 import com.firebase.client.Firebase;
 
 /**
@@ -7,9 +9,20 @@ import com.firebase.client.Firebase;
  */
 public class MyApp extends android.app.Application {
 
+    private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Save app context
+        context = this;
+
+        // Set up Firebase
         Firebase.setAndroidContext(this);
+    }
+
+    public static Context getContext(){
+        return context;
     }
 }
