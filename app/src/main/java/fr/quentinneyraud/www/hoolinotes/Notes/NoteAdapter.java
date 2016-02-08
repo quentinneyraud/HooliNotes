@@ -39,7 +39,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public void onBindViewHolder(NoteViewHolder holder, int position) {
         Note note = notes.get(position);
 
-        holder.setId((long) 55);
+        holder.setId(note.getId());
         holder.getTitleElement().setText(note.getTitle());
         holder.getTextElement().setText(note.getText());
     }
@@ -49,19 +49,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         return notes.size();
     }
 
-    public void addNotes(List<Note> allNotes){
-        notes.addAll(allNotes);
+    public void addNote(Note note){
+        notes.add(note);
     }
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private Long id;
+        private String id;
 
-        public Long getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(Long id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -92,7 +92,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public interface NoteClickListener{
 
-        void onClick(View v, long i);
+        void onClick(View v, String i);
 
     }
 
