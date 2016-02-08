@@ -22,7 +22,6 @@ public class SharedPreferencesManager {
     private static final String EMAIL_KEY = "EMAIL";
     private static final String PASSWORD_KEY = "PASSWORD";
     private static final String IS_LOGIN = "IS_LOGIN";
-    private static final String USER_ID_KEY = "USER_ID";
 
     public SharedPreferencesManager(Context context){
         this._context = context;
@@ -37,14 +36,6 @@ public class SharedPreferencesManager {
         user.put(PASSWORD_KEY, preferences.getString(PASSWORD_KEY, null));
 
         return user;
-    }
-
-    public String getUserUid(){
-        return preferences.getString(USER_ID_KEY, null);
-    }
-
-    public void setUserUid(String userUid){
-        editor.putString(USER_ID_KEY, userUid);
     }
 
     public void LogInUser(String email, String password){
