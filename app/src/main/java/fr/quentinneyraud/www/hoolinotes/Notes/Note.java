@@ -12,6 +12,7 @@ public class Note {
     private static final String TAG = "Note class";
 
     // Note properties
+    private String id;
     private String title;
     private String text;
     private Date createdAt;
@@ -28,6 +29,14 @@ public class Note {
         this.setLatitude(latitude);
         this.setLongitude(longitude);
         Log.d(TAG, "New note created " + this.toString());
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
