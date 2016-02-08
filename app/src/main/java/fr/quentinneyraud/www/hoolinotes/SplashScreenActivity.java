@@ -2,9 +2,8 @@ package fr.quentinneyraud.www.hoolinotes;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +12,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.HashMap;
+
+import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -39,6 +40,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 @Override
                 public void onAuthenticated(AuthData authData) {
+
+                    // Save user
+                    SessionManager.setUser(authData.getUid());
 
                     // Start notes activity
                     Intent i = new Intent(SplashScreenActivity.this, NotesActivity.class);
