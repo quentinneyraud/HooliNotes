@@ -2,7 +2,6 @@ package fr.quentinneyraud.www.hoolinotes;
 
 
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.quentinneyraud.www.hoolinotes.Notes.Note;
 import fr.quentinneyraud.www.hoolinotes.Notes.NoteAdapter;
+import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 
 
 /**
@@ -27,7 +30,6 @@ public class NotesListFragment extends Fragment {
     private static final String TAG = "NOTES LIST FRAGMENT ===";
 
     private NoteAdapter noteAdapter;
-
     public NotesListFragment() {}
 
     public void setLocation(Location location){
@@ -37,6 +39,7 @@ public class NotesListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notes_list, container, false);
 
@@ -50,22 +53,51 @@ public class NotesListFragment extends Fragment {
         // Set listener
         noteAdapter.setNoteClickListener(new NoteAdapter.NoteClickListener() {
             @Override
-            public void onClick(View v, long id) {
+            public void onClick(View v, String id) {
                 Log.d(TAG, "Click on " + String.valueOf(id));
             }
         });
 
         rcView.setAdapter(noteAdapter);
 
-        this.loadDatas();
+        this.loadUserNotes();
 
         return view;
     }
 
-    private void loadDatas(){
-        // TODO : get notes, pass them to adapter & notify change
-        // noteAdapter.addNotes(listNotes);
-        // noteAdapter.notifyDataSetChanged();
+    private void loadUserNotes(){
+        SessionManager.getUser().getNotes(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                // Create instance pass it to adapter
+                Note note = dataSnapshot.getValue(Note.class);
+                note.setId(dataSnapshot.getKey());
+                noteAdapter.addNote(note);
+                noteAdapter.notifyItemInserted(noteAdapter.getItemCount() - 1);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
 }
