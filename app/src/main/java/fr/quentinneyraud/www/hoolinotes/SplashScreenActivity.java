@@ -40,9 +40,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 @Override
                 public void onAuthenticated(AuthData authData) {
 
-                    // Store user uid
-                    sharedPreferencesManager.setUserUid(authData.getUid());
-
                     // Start notes activity
                     Intent i = new Intent(SplashScreenActivity.this, NotesActivity.class);
                     startActivity(i);
