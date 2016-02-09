@@ -2,12 +2,14 @@ package fr.quentinneyraud.www.hoolinotes;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -16,6 +18,8 @@ import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 
 public class NotesActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationListener, ViewPager.OnPageChangeListener {
 
@@ -42,6 +46,11 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null && savedInstanceState.containsKey("USER_ID")){
+            SessionManager.setUser(this, savedInstanceState.getString("USER_ID"));
+        }
+
         setContentView(R.layout.activity_notes);
 
         // View Pager
@@ -73,6 +82,15 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onStop(){
         super.onStop();
         googleApiClient.disconnect();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        // Save user uid
+        outState.putString("USER_ID", SessionManager.getUser().getuId());
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
