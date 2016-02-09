@@ -36,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             HashMap<String,String> user = sharedPreferencesManager.getUser();
 
             // Auth with shared preferences datas
-            new Firebase(getResources().getString(R.string.firebase_base)).authWithPassword(user.get("EMAIL"), user.get("PASSWORD"), new Firebase.AuthResultHandler() {
+            SessionManager.auth(user.get("EMAIL"), user.get("PASSWORD"), new Firebase.AuthResultHandler() {
 
                 @Override
                 public void onAuthenticated(AuthData authData) {
