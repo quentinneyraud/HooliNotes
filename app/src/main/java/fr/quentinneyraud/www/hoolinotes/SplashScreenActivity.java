@@ -14,6 +14,7 @@ import com.firebase.client.FirebaseError;
 import java.util.HashMap;
 
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
+import fr.quentinneyraud.www.hoolinotes.Utils.SharedPreferencesManager;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

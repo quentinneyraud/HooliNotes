@@ -1,4 +1,4 @@
-package fr.quentinneyraud.www.hoolinotes;
+package fr.quentinneyraud.www.hoolinotes.Utils;
 
 import android.content.Context;
 

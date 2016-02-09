@@ -5,7 +5,6 @@ import android.content.Context;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.Firebase;
 
-import fr.quentinneyraud.www.hoolinotes.MyApp;
 import fr.quentinneyraud.www.hoolinotes.R;
 
 /**
