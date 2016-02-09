@@ -36,13 +36,13 @@ public class SplashScreenActivity extends AppCompatActivity {
             HashMap<String,String> user = sharedPreferencesManager.getUser();
 
             // Auth with shared preferences datas
-            SessionManager.auth(user.get("EMAIL"), user.get("PASSWORD"), new Firebase.AuthResultHandler() {
+            SessionManager.auth(this, user.get("EMAIL"), user.get("PASSWORD"), new Firebase.AuthResultHandler() {
 
                 @Override
                 public void onAuthenticated(AuthData authData) {
 
                     // Save user
-                    SessionManager.setUser(authData.getUid());
+                    SessionManager.setUser(getBaseContext(), authData.getUid());
 
                     // Start notes activity
                     Intent i = new Intent(SplashScreenActivity.this, NotesActivity.class);

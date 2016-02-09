@@ -28,11 +28,10 @@ public class User {
 
     }
 
-    public User(String uId){
+    public User(Context context, String uId){
 
         // Get context & create reference to user
-        Context appContext = MyApp.getContext();
-        String url = appContext.getResources().getString(R.string.firebase_base) + "/users/" + uId;
+        String url = context.getResources().getString(R.string.firebase_base) + "/users/" + uId;
         userRef = new Firebase(url);
 
         setuId(uId);

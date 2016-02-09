@@ -21,8 +21,4 @@ public class MyApp extends android.app.Application {
         // Set up Firebase
         Firebase.setAndroidContext(this);
     }
-
-    public static Context getContext(){
-        return context;
-    }
 }

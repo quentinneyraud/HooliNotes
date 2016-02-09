@@ -1,8 +1,9 @@
 package fr.quentinneyraud.www.hoolinotes.User;
 
+import android.content.Context;
+
 import com.firebase.client.Firebase;
 
-import fr.quentinneyraud.www.hoolinotes.MyApp;
 import fr.quentinneyraud.www.hoolinotes.R;
 
 /**
@@ -16,12 +17,12 @@ public class SessionManager {
         return user;
     }
 
-    public static void setUser(String uId){
-        user = new User(uId);
+    public static void setUser(Context context, String uId){
+        user = new User(context, uId);
     }
 
-    public static void auth(String email, String password, Firebase.AuthResultHandler firebaseAuthResultHandler){
-        String firebaseUrl = MyApp.getContext().getResources().getString(R.string.firebase_base);
+    public static void auth(Context context, String email, String password, Firebase.AuthResultHandler firebaseAuthResultHandler){
+        String firebaseUrl = context.getResources().getString(R.string.firebase_base);
 
         new Firebase(firebaseUrl).authWithPassword(email, password, firebaseAuthResultHandler);
     }
