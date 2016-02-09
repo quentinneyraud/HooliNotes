@@ -51,8 +51,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             });
         }else{
-            // start login activity
-            Toast.makeText(SplashScreenActivity.this, "Start login activity", Toast.LENGTH_SHORT).show();
+            // start account activity
+            Intent i = new Intent(SplashScreenActivity.this, AccountActivity.class);
+            startActivity(i);
+            finish();
         }
 
 
