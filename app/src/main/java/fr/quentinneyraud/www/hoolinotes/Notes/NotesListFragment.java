@@ -45,7 +45,7 @@ public class NotesListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notes_list, container, false);
 
         // Get recycler view
-        RecyclerView rcView = (RecyclerView) view.findViewById(R.id.fragment_notes_recycler_view);
+        RecyclerView rcView = (RecyclerView) view.findViewById(R.id.notes_list_recycler_view);
         rcView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         // Create adapter

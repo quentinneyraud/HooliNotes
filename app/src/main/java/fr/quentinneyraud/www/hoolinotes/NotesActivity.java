@@ -54,12 +54,12 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_notes);
 
         // View Pager
-        viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
+        viewPager = (ViewPager) findViewById(R.id.notes_activity_view_pager);
         setupViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
 
         // Tabs
-        tabLayout = (TabLayout) findViewById(R.id.main_activity_tabs);
+        tabLayout = (TabLayout) findViewById(R.id.notes_activity_tabs);
         tabLayout.setupWithViewPager(viewPager);
         setTabIcons();
 
