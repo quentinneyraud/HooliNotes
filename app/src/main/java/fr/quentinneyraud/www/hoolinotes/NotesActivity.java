@@ -2,14 +2,12 @@ package fr.quentinneyraud.www.hoolinotes;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -19,6 +17,8 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.quentinneyraud.www.hoolinotes.Notes.NotesListFragment;
+import fr.quentinneyraud.www.hoolinotes.Notes.NotesMapFragment;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 
 public class NotesActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationListener, ViewPager.OnPageChangeListener {

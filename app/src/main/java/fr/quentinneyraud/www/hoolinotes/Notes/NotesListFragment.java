@@ -1,4 +1,4 @@
-package fr.quentinneyraud.www.hoolinotes;
+package fr.quentinneyraud.www.hoolinotes.Notes;
 
 
 import android.location.Location;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import fr.quentinneyraud.www.hoolinotes.Notes.Note;
 import fr.quentinneyraud.www.hoolinotes.Notes.NoteAdapter;
+import fr.quentinneyraud.www.hoolinotes.R;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 
 
