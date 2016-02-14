@@ -1,13 +1,9 @@
 package fr.quentinneyraud.www.hoolinotes.Account;
 
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +17,9 @@ import com.firebase.client.FirebaseError;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import fr.quentinneyraud.www.hoolinotes.R;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
+import fr.quentinneyraud.www.hoolinotes.Utils.DeviceInfo;
 
 
 /**
@@ -64,7 +57,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         creatAccountTextView.setOnClickListener(this);
 
         // Autocomplete email
-        emailEditText.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, getAccounts()));
+        emailEditText.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, DeviceInfo.getAccounts(getContext())));
 
         return view;
     }
@@ -76,35 +69,23 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             signInListener = (SignInListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement HomeFragmentListener");
+                    + " must implement SignInListener");
         }
-    }
-
-    private ArrayList<String> getAccounts(){
-        final Account[] accounts = AccountManager.get(getContext()).getAccounts();
-        final Set<String> emailSet = new HashSet<String>();
-        for (Account account : accounts) {
-            if (Patterns.EMAIL_ADDRESS.matcher(account.name).matches()) {
-                emailSet.add(account.name);
-            }
-        }
-        return new ArrayList<String>(emailSet);
-
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.sign_in_submit_button:
-                submitLoginForm();
+                SubmitLoginForm();
                 break;
             case R.id.sign_in_create_account_edit_text:
-                signInListener.createAccount();
+                signInListener.CreateAccount();
                 break;
         }
     }
 
-    private void submitLoginForm(){
+    private void SubmitLoginForm(){
         submitButton.setProgress(1);
 
         final String email = emailEditText.getText().toString();
@@ -114,7 +95,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onAuthenticated(AuthData authData) {
                 submitButton.setProgress(0);
-                signInListener.successSignIn(authData.getUid(), email, password);
+                signInListener.SuccessSignIn(authData.getUid(), email, password);
             }
 
             @Override
@@ -131,7 +112,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
     public interface SignInListener{
-        void successSignIn(String uId, String email, String password);
-        void createAccount();
+        void SuccessSignIn(String uId, String email, String password);
+        void CreateAccount();
     }
 }
