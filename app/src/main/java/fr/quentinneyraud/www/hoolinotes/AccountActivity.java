@@ -10,7 +10,7 @@ import fr.quentinneyraud.www.hoolinotes.Account.SignUpFragment;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 import fr.quentinneyraud.www.hoolinotes.Utils.SharedPreferencesManager;
 
-public class AccountActivity extends AppCompatActivity implements SignInFragment.SignInListener {
+public class AccountActivity extends AppCompatActivity implements SignInFragment.SignInListener, SignUpFragment.SignUpListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class AccountActivity extends AppCompatActivity implements SignInFragment
     }
 
     @Override
-    public void successSignIn(String uId, String email, String password) {
+    public void SuccessSignIn(String uId, String email, String password) {
 
         // Store in shared preferences
         SharedPreferencesManager preferences = new SharedPreferencesManager(this);
@@ -48,7 +48,13 @@ public class AccountActivity extends AppCompatActivity implements SignInFragment
     }
 
     @Override
-    public void createAccount() {
+    public void CreateAccount() {
         changeFragment(new SignUpFragment(), true);
+    }
+
+    @Override
+    public void SuccessSignUp(String uId, String email, String password) {
+        // Login when account created
+        SuccessSignIn(uId, email, password);
     }
 }
