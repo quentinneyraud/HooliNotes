@@ -1,12 +1,50 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Account.SignUpFragment">
+    android:orientation="vertical"
+    tools:context=".Account.SignInFragment">
 
-    <TextView
+    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+        android:id="@+id/sign_up_email_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Test signup" />
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="80dp"
+        android:completionThreshold="3"
+        android:hint="email"
+        android:inputType="textEmailAddress" />
 
-</FrameLayout>
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/sign_up_password_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:hint="password"
+        android:inputType="textPassword" />
+
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:id="@+id/sign_up_submit_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:text="Se connecter"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        custom:pb_colorComplete="#00ff00"
+        custom:pb_colorNormal="#0000ff"
+        custom:pb_colorPressed="#0000ff"
+        custom:pb_colorProgress="#5487de"
+        custom:pb_textComplete="Success"
+        custom:pb_textProgress="Loading" />
+
+</LinearLayout>
