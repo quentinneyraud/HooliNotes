@@ -120,8 +120,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
                 submitButton.setProgress(0);
-                // gérer erreurs
-                Log.d("CONNECT", firebaseError.toString());
+                Integer errorCode = firebaseError.getCode();
+                if(errorCode == -15){
+                    emailEditText.setError("Email incorrecte");
+                }else if(errorCode == -16){
+                    passwordEditText.setError("Mot de passe incorrecte");
+                }
             }
         });
     }
