@@ -27,7 +27,6 @@ import java.util.Set;
 
 import fr.quentinneyraud.www.hoolinotes.R;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
-import fr.quentinneyraud.www.hoolinotes.Utils.SharedPreferencesManager;
 
 
 /**
@@ -100,7 +99,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 submitLoginForm();
                 break;
             case R.id.sign_in_create_account_edit_text:
-                Log.d("Account", "passe ici");
                 signInListener.createAccount();
                 break;
         }
@@ -116,11 +114,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onAuthenticated(AuthData authData) {
                 submitButton.setProgress(0);
-
-                SharedPreferencesManager preferences = new SharedPreferencesManager(getContext());
-                preferences.LogInUser(email, password);
-
-                signInListener.successSignIn();
+                signInListener.successSignIn(authData.getUid(), email, password);
             }
 
             @Override
@@ -133,7 +127,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
     public interface SignInListener{
-        void successSignIn();
+        void successSignIn(String uId, String email, String password);
         void createAccount();
     }
 }

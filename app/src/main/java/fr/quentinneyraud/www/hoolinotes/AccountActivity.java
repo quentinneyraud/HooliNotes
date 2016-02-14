@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import fr.quentinneyraud.www.hoolinotes.Account.SignInFragment;
 import fr.quentinneyraud.www.hoolinotes.Account.SignUpFragment;
+import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
+import fr.quentinneyraud.www.hoolinotes.Utils.SharedPreferencesManager;
 
 public class AccountActivity extends AppCompatActivity implements SignInFragment.SignInListener {
 
@@ -30,7 +32,16 @@ public class AccountActivity extends AppCompatActivity implements SignInFragment
     }
 
     @Override
-    public void successSignIn() {
+    public void successSignIn(String uId, String email, String password) {
+
+        // Store in shared preferences
+        SharedPreferencesManager preferences = new SharedPreferencesManager(this);
+        preferences.LogInUser(email, password);
+
+        // Set current user
+        SessionManager.setUser(this, uId);
+
+        // Go to notes activity
         Intent i = new Intent(AccountActivity.this, NotesActivity.class);
         startActivity(i);
         finish();
