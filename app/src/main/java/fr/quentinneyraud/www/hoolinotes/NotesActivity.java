@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -21,7 +22,7 @@ import fr.quentinneyraud.www.hoolinotes.Notes.NotesListFragment;
 import fr.quentinneyraud.www.hoolinotes.Notes.NotesMapFragment;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 
-public class NotesActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationListener, ViewPager.OnPageChangeListener {
+public class NotesActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationListener, ViewPager.OnPageChangeListener{
 
     private static final String TAG = "====== MAIN ACTIVITY";
 
@@ -147,7 +148,6 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> fragmentList = new ArrayList<>();
-//        private final List<String> fragmentTitleList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -165,7 +165,6 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
 
         public void addFragment(Fragment fragment, String title) {
             fragmentList.add(fragment);
-//            fragmentTitleList.add(title);
         }
 
         @Override
