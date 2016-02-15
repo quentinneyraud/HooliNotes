@@ -4,4 +4,14 @@
 
     <string name="splash_screen.textview_title">HooliNotes</string>
     <string name="please_accept_location">Merci d\'accepter la localisation</string>
+    <string name="sign_in_create_account">Créer un compte</string>
+    <string name="sign_in_connect">Se connecter</string>
+    <string name="sign_in_password_hint">password</string>
+    <string name="sign_in_email_hint">email</string>
+    <string name="sign_in_bar_title">Se connecter</string>
+    <string name="sign_up_bar_title">Créer un compte</string>
+    <string name="notes_add_bar_title">Nouvelle note</string>
+    <string name="notes_add_title_hint">Title</string>
+    <string name="notes_add_text_hint">Text</string>
+    <string name="notes_add_submit_text">Créer</string>
 </resources>
