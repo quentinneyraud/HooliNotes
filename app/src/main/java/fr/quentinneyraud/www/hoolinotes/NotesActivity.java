@@ -1,6 +1,7 @@
 package fr.quentinneyraud.www.hoolinotes;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,7 +25,6 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.quentinneyraud.www.hoolinotes.Notes.NotesDetailFragment;
 import fr.quentinneyraud.www.hoolinotes.Notes.NotesListFragment;
 import fr.quentinneyraud.www.hoolinotes.Notes.NotesMapFragment;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
@@ -42,6 +42,7 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
             R.drawable.ic_earth
     };
     private FloatingActionButton fab;
+    private boolean overlayShow = false;
 
     // Geolocation
     private GoogleApiClient googleApiClient;
@@ -52,7 +53,6 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
     // Fragments
     private NotesListFragment notesListFragment;
     private NotesMapFragment notesMapFragment;
-    private NotesDetailFragment notesDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,19 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
 
         // UI
         fab = (FloatingActionButton) findViewById(R.id.notes_activity_fab_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentLocation == null){
+                    Toast.makeText(getBaseContext(), "Aucune donnée GPS", Toast.LENGTH_LONG).show();
+                }else{
+                    Intent i = new Intent(getBaseContext(), NotesAddActivity.class);
+                    i.putExtra("LATITUDE", currentLocation.getLatitude());
+                    i.putExtra("LONGITUDE", currentLocation.getLongitude());
+                    startActivity(i);
+                }
+            }
+        });
 
         // View Pager
         viewPager = (ViewPager) findViewById(R.id.notes_activity_view_pager);
@@ -223,6 +236,9 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onPageSelected(int position) {
         // Do not wait new location when tab changed
+        if(overlayShow){
+            return;
+        }
         sendLocationToCurrentFragment();
     }
 
@@ -235,11 +251,9 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onItemSelectedOnList(String id) {
-        Log.d(TAG, "clicked = " + SessionManager.getNoteById(id));
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(NotesDetailFragment.newInstance(id), "DETAIL")
-                .commit();
+        Intent i = new Intent(this, NotesDetailActivity.class);
+        i.putExtra("NoteId", id);
+        startActivity(i);
     }
 
     @Override
