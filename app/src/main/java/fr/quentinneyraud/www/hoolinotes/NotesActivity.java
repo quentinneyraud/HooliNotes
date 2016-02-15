@@ -38,8 +38,8 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private int[] tabIcons = {
-        R.drawable.common_plus_signin_btn_text_light_pressed,
-        R.drawable.common_plus_signin_btn_text_light_pressed
+            R.drawable.ic_list,
+            R.drawable.ic_earth
     };
     private FloatingActionButton fab;
 
