@@ -7,51 +7,75 @@
     android:orientation="vertical"
     tools:context=".Account.SignInFragment">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:text="@string/sign_in_bar_title"/>
+    </android.support.v7.widget.Toolbar>
+
     <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
         android:id="@+id/sign_in_email_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="80dp"
         android:completionThreshold="3"
-        android:hint="email"
+        android:hint="@string/sign_in_email_hint"
         android:inputType="textEmailAddress" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/sign_in_password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="50dp"
-        android:hint="password"
+        android:hint="@string/sign_in_password_hint"
         android:inputType="textPassword" />
 
     <com.dd.processbutton.iml.ActionProcessButton
         android:id="@+id/sign_in_submit_button"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
-        android:text="Se connecter"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/sign_in_connect"
         android:textColor="#fff"
         android:textSize="18sp"
         custom:pb_colorComplete="#00ff00"
-        custom:pb_colorNormal="#0000ff"
-        custom:pb_colorPressed="#0000ff"
+        custom:pb_colorNormal="#3F51B5"
+        custom:pb_colorPressed="#3F51B5"
         custom:pb_colorProgress="#5487de"
         custom:pb_textComplete="Success"
         custom:pb_textProgress="Loading" />
 
-    <TextView
+    <Button
         android:id="@+id/sign_in_create_account_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Créer un compte" />
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/sign_in_create_account"
+        android:textColor="#fff" />
 
 
 </LinearLayout>
