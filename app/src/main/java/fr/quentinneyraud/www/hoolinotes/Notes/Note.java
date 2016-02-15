@@ -2,11 +2,15 @@ package fr.quentinneyraud.www.hoolinotes.Notes;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+
 import java.util.Date;
 
 /**
  * Created by quentin on 07/02/16.
  */
+@JsonIgnoreProperties({"id", "latLng"})
 public class Note {
 
     private static final String TAG = "Note class";
@@ -16,8 +20,8 @@ public class Note {
     private String title;
     private String text;
     private Date createdAt;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
 
     public Note() {
     }
@@ -28,7 +32,6 @@ public class Note {
         this.setCreatedAt(createdAt);
         this.setLatitude(latitude);
         this.setLongitude(longitude);
-        Log.d(TAG, "New note created " + this.toString());
     }
 
     public String getId() {
@@ -63,24 +66,36 @@ public class Note {
         this.createdAt = createdAt;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(getLatitude(), getLongitude());
     }
 
     @Override
     public String toString() {
-        return "Note title: " + this.getTitle() + " description: " + this.getText() + " created at: " + this.getCreatedAt() + " on lat: " + this.getLatitude() + " / long: " + this.getLongitude();
+        return "Note{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", createdAt=" + createdAt +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", latLng=" + getLatLng() +
+                '}';
     }
 }
