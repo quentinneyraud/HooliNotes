@@ -1,6 +1,7 @@
 package fr.quentinneyraud.www.hoolinotes.Notes;
 
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,13 +30,17 @@ import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NotesMapFragment extends Fragment implements MapView.OnMarkerClickListener {
+public class NotesMapFragment extends Fragment implements MapView.OnMarkerClickListener, SessionManager.NotesListener {
 
-    private LatLng currentPosition;
+    private static final String TAG = "NOTES MAP FRAGMENT ===";
+
+    // mapbox
     private MapView mapView;
+    private LatLng currentPosition;
     private boolean firstPositionReceived = true;
     private Map<Long, Marker> markerList;
-    private static final String TAG = "NOTES MAP FRAGMENT ===";
+
+    private NotesMapListener notesMapListener;
 
     public NotesMapFragment() {
         // Required empty public constructor
@@ -44,7 +49,7 @@ public class NotesMapFragment extends Fragment implements MapView.OnMarkerClickL
     public void setLocation(Location location){
         setCurrentPosition(new LatLng(location.getLatitude(), location.getLongitude()));
         if(firstPositionReceived){
-            goTo(getCurrentPosition());
+            goTo(getCurrentPosition(), false);
             firstPositionReceived = false;
         }
     }
@@ -62,60 +67,68 @@ public class NotesMapFragment extends Fragment implements MapView.OnMarkerClickL
 
         // Move to current location or Annecy =)
         if(getCurrentPosition() != null){
-            goTo(getCurrentPosition());
+            goTo(getCurrentPosition(), false);
         }else{
-            goTo(new LatLng(45.899271, 6.129500));
+            goTo(new LatLng(45.894027, 6.133081), false);
         }
 
         mapView.setOnMarkerClickListener(this);
 
         mapView.onCreate(savedInstanceState);
 
-        ListenUserNotes();
-
-
         return view;
     }
 
-    private void goTo(LatLng position){
-        mapView.setLatLng(position, true);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NotesMapListener) {
+            notesMapListener = (NotesMapListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement NotesListListener");
+        }
     }
 
-    private void ListenUserNotes(){
-        SessionManager.getUser().ListenNotes(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Note note = dataSnapshot.getValue(Note.class);
-                note.setId(dataSnapshot.getKey());
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
 
-                Log.d(TAG, note.toString());
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
 
-                mapView.addMarker(new MarkerOptions()
-                        .position(note.getLatLng())
-                        .title(note.getTitle())
-                        .snippet(note.getText()));
-            }
+    @Override
+    public void onPause()  {
+        super.onPause();
+        mapView.onPause();
+    }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
 
-            }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
 
-            }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+    private void goTo(LatLng position, boolean animated){
+        mapView.setLatLng(position, animated);
     }
 
     @Override
@@ -130,5 +143,17 @@ public class NotesMapFragment extends Fragment implements MapView.OnMarkerClickL
 
     public void setCurrentPosition(LatLng currentPosition) {
         this.currentPosition = currentPosition;
+    }
+
+    @Override
+    public void onNoteAdded(Note note) {
+        mapView.addMarker(new MarkerOptions()
+                .position(note.getLatLng())
+                .title(note.getTitle())
+                .snippet(note.getText().substring(0, 20) + "..."));
+    }
+
+    public interface NotesMapListener{
+        void onItemSelectedOnMap(String id);
     }
 }
