@@ -47,7 +47,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
-                    Toast.makeText(SplashScreenActivity.this, "Erreur auth", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashScreenActivity.this, "Connexion requise", Toast.LENGTH_SHORT).show();
                 }
             });
         }else{
