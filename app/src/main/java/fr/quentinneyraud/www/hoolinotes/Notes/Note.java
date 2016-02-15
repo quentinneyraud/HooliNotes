@@ -5,6 +5,7 @@ import android.util.Log;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -84,6 +85,18 @@ public class Note {
 
     public LatLng getLatLng() {
         return new LatLng(getLatitude(), getLongitude());
+    }
+
+    public String getFormattedText(Integer length){
+        if(getText().length() < length){
+            return getText();
+        }else{
+            return getText().substring(0, length) + "...";
+        }
+    }
+
+    public String getFormattedDate(){
+        return new SimpleDateFormat("dd/MM/yyyy").format(getCreatedAt());
     }
 
     @Override
