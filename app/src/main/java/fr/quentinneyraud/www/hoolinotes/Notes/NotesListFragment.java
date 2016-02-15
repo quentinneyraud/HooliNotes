@@ -17,8 +17,6 @@ import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 
-import fr.quentinneyraud.www.hoolinotes.Notes.Note;
-import fr.quentinneyraud.www.hoolinotes.Notes.NoteAdapter;
 import fr.quentinneyraud.www.hoolinotes.R;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 
@@ -26,7 +24,7 @@ import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NotesListFragment extends Fragment {
+public class NotesListFragment extends Fragment implements NoteAdapter.NoteClickListener {
 
     private static final String TAG = "NOTES LIST FRAGMENT ===";
 
@@ -34,7 +32,6 @@ public class NotesListFragment extends Fragment {
     public NotesListFragment() {}
 
     public void setLocation(Location location){
-        Log.d(TAG, "position");
     }
 
     @Override
@@ -52,26 +49,19 @@ public class NotesListFragment extends Fragment {
         noteAdapter = new NoteAdapter(new ArrayList<Note>());
 
         // Set listener
-        noteAdapter.setNoteClickListener(new NoteAdapter.NoteClickListener() {
-            @Override
-            public void onClick(View v, String id) {
-                Log.d(TAG, "Click on " + String.valueOf(id));
-            }
-        });
+        noteAdapter.setNoteClickListener(this);
 
         rcView.setAdapter(noteAdapter);
 
-        this.loadUserNotes();
+        ListenUserNotes();
 
         return view;
     }
 
-    private void loadUserNotes(){
-        SessionManager.getUser().getNotes(new ChildEventListener() {
-
+    private void ListenUserNotes(){
+        SessionManager.getUser().ListenNotes(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
                 // Create instance pass it to adapter
                 Note note = dataSnapshot.getValue(Note.class);
                 note.setId(dataSnapshot.getKey());
@@ -101,4 +91,8 @@ public class NotesListFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onClick(View v, String i) {
+
+    }
 }
