@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/notes_activity_coord_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/activity_background">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -31,9 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_add_24dp"
+        app:backgroundTint="#2196F3"
+        android:src="@drawable/ic_plus"
         app:layout_anchor="@id/notes_activity_coord_layout"
-
         app:layout_anchorGravity="bottom|right" />
 
 </android.support.design.widget.CoordinatorLayout>
