@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -12,9 +13,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -23,12 +24,12 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.quentinneyraud.www.hoolinotes.Notes.NotesDetailFragment;
 import fr.quentinneyraud.www.hoolinotes.Notes.NotesListFragment;
 import fr.quentinneyraud.www.hoolinotes.Notes.NotesMapFragment;
 import fr.quentinneyraud.www.hoolinotes.User.SessionManager;
-import fr.quentinneyraud.www.hoolinotes.User.User;
 
-public class NotesActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationListener, ViewPager.OnPageChangeListener{
+public class NotesActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationListener, ViewPager.OnPageChangeListener, NotesListFragment.NotesListListener, NotesMapFragment.NotesMapListener{
 
     private static final String TAG = "====== MAIN ACTIVITY";
     private static final int PERMISSION_LOCATION = 204;
@@ -40,6 +41,7 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
         R.drawable.common_plus_signin_btn_text_light_pressed,
         R.drawable.common_plus_signin_btn_text_light_pressed
     };
+    private FloatingActionButton fab;
 
     // Geolocation
     private GoogleApiClient googleApiClient;
@@ -50,6 +52,7 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
     // Fragments
     private NotesListFragment notesListFragment;
     private NotesMapFragment notesMapFragment;
+    private NotesDetailFragment notesDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,9 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
         setContentView(R.layout.activity_notes);
+
+        // UI
+        fab = (FloatingActionButton) findViewById(R.id.notes_activity_fab_button);
 
         // View Pager
         viewPager = (ViewPager) findViewById(R.id.notes_activity_view_pager);
@@ -76,6 +82,11 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
                 .build();
+
+        // Listeners
+        SessionManager.setNotesListener(notesListFragment);
+        SessionManager.setNotesListener(notesMapFragment);
+        SessionManager.ListenNotes();
     }
 
     @Override
@@ -217,4 +228,22 @@ public class NotesActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onPageScrollStateChanged(int state) {}
+
+    /*
+        Fragment Listeners
+     */
+
+    @Override
+    public void onItemSelectedOnList(String id) {
+        Log.d(TAG, "clicked = " + SessionManager.getNoteById(id));
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(NotesDetailFragment.newInstance(id), "DETAIL")
+                .commit();
+    }
+
+    @Override
+    public void onItemSelectedOnMap(String id) {
+
+    }
 }
