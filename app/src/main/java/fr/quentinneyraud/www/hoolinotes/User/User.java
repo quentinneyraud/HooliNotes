@@ -6,6 +6,9 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.quentinneyraud.www.hoolinotes.R;
 
 /**
@@ -41,6 +44,10 @@ public class User {
 
     public void ListenNotes(ChildEventListener childEventListener){
         userRef.child("notes").addChildEventListener(childEventListener);
+    }
+
+    public void AddNote(HashMap<String, Object> note){
+        userRef.child("notes").push().setValue(note);
     }
 
 
