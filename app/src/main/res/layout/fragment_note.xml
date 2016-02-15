@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:background="@color/fragment_note.tile_background_color"
     android:elevation="5dp"
     android:orientation="vertical"
@@ -13,17 +13,26 @@
         android:id="@+id/note_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/fragment_note.title_color"
+        android:textColor="#000"
         android:textSize="23sp"
         tools:text="Note title" />
+
+    <TextView
+        android:id="@+id/note_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="12sp"
+        android:text="16/02/0525"/>
 
 
     <TextView
         android:id="@+id/note_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/fragment_note.text_color"
+        android:textColor="#333"
         android:textSize="15sp"
+        android:paddingTop="10dp"
         tools:text="Note description" />
 
 </LinearLayout>
