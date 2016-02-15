@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import fr.quentinneyraud.www.hoolinotes.R;
@@ -41,7 +42,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         holder.setId(note.getId());
         holder.getTitleElement().setText(note.getTitle());
-        holder.getTextElement().setText(note.getText());
+        holder.getTextElement().setText(note.getFormattedText(150));
+        holder.getDateElement().setText(note.getFormattedDate());
     }
 
     @Override
@@ -73,6 +75,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         public TextView getTextElement() {
             return (TextView) itemView.findViewById(R.id.note_description);
+        }
+
+        public TextView getDateElement() {
+            return (TextView) itemView.findViewById(R.id.note_date);
         }
 
         public NoteViewHolder(View itemView) {
