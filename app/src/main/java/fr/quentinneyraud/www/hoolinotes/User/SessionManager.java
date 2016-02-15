@@ -79,6 +79,10 @@ public class SessionManager {
         });
     }
 
+    public static void AddNote(HashMap<String, Object> note){
+        user.AddNote(note);
+    }
+
     public static Note getNoteById(String id){
         return (notesList.get(id) != null) ? notesList.get(id) : null;
     }
