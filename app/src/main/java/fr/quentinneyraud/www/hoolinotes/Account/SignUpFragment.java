@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.firebase.client.AuthData;
@@ -30,6 +31,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private ActionProcessButton submitButton;
     private MaterialAutoCompleteTextView emailEditText;
     private MaterialEditText passwordEditText;
+    private ImageButton returnButton;
 
     SignUpListener signUpListener;
 
@@ -59,10 +61,17 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         emailEditText = (MaterialAutoCompleteTextView) view.findViewById(R.id.sign_up_email_edit_text);
         passwordEditText = (MaterialEditText) view.findViewById(R.id.sign_up_password_edit_text);
         submitButton = (ActionProcessButton) view.findViewById(R.id.sign_up_submit_button);
+        returnButton = (ImageButton) view.findViewById(R.id.sign_up_return);
 
         // Listener
         submitButton.setMode(ActionProcessButton.Mode.ENDLESS);
         submitButton.setOnClickListener(this);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
 
         // Autocomplete email
         emailEditText.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, DeviceInfo.getAccounts(getContext())));
