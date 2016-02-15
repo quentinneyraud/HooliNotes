@@ -3,4 +3,5 @@
     <string name="firebase_base">https://hoolinotes.firebaseio.com/</string>
 
     <string name="splash_screen.textview_title">HooliNotes</string>
+    <string name="please_accept_location">Merci d\'accepter la localisation</string>
 </resources>
