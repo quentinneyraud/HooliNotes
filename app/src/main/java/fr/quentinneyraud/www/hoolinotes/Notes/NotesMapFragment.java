@@ -150,7 +150,7 @@ public class NotesMapFragment extends Fragment implements MapView.OnMarkerClickL
         mapView.addMarker(new MarkerOptions()
                 .position(note.getLatLng())
                 .title(note.getTitle())
-                .snippet(note.getText().substring(0, 20) + "..."));
+                .snippet(note.getFormattedText(20)));
     }
 
     public interface NotesMapListener{
