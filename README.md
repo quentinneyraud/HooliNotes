@@ -19,11 +19,11 @@ Développer une application mobile permettant de :
 
 
 ## Captures
-!(https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/map.png)
 *Vue Map*
-!(Map)(https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/noteslist.png)
+![](https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/map.png)
 *Vue liste de notes*
-!(Map)(https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/signin.png)
+![](https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/noteslist.png)
 *Vue de connection*
-!(Map)(https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/splash.png)
+![](https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/signin.png)
 *Vue Splashscreen*
+![](https://github.com/quentinneyraud/HooliNotes/blob/master/Ressources%20Readme/splash.png)
